@@ -10,6 +10,8 @@ package com.skills4it.blackjack.models;
 public class Player {
     private final String name;
     private final Hand hand;
+    private int chips;
+    private int currentBet;
 
     public Player(String name) {
         if (name == null || name.isBlank()) {
@@ -17,8 +19,17 @@ public class Player {
         } else {
             this.name = name.trim();
         }
+        this.chips = 1000;
+        this.currentBet = 0;
 
         this.hand = new Hand();
+    }
+
+    public int getChips() {
+        return chips;
+    }
+    public int getCurrentBet() {
+        return currentBet;
     }
 
     public String getName() {

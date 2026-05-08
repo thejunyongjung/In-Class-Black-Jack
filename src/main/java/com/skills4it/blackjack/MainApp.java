@@ -3,6 +3,7 @@ package com.skills4it.blackjack;
 import com.skills4it.blackjack.enums.BettingOption;
 import com.skills4it.blackjack.ui.BlackjackConsoleUI;
 import java.util.Scanner;
+import static com.skills4it.blackjack.ui.BlackjackConsoleUI.askForBettingOption;
 
 /**
  * MainApp starts the program and manages console input/output.
@@ -15,7 +16,6 @@ public class MainApp {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        printWelcome();
 
         BettingOption bet = askForBettingOption();
 
