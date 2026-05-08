@@ -1,5 +1,10 @@
 package com.skills4it.blackjack;
 
+import com.skills4it.blackjack.enums.BettingOption;
+import com.skills4it.blackjack.enums.PlayerRank;
+import com.skills4it.blackjack.model.Player;
+import com.skills4it.blackjack.game.BlackjackGame;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,6 +21,13 @@ public class MainApp {
 
     public static void main(String[] args) {
         printWelcome();
+
+        BettingOption bet = askForBettingOption();
+
+        System.out.println();
+        System.out.println("Selected bet: " + bet.getDisplayName());
+        System.out.println("Bet amount: $" + bet.getAmount());
+        System.out.println();
 
         int numberOfPlayers = askForNumberOfPlayers();
         List<String> playerNames = askForPlayerNames(numberOfPlayers);
@@ -64,6 +76,32 @@ public class MainApp {
         return names;
     }
 
+    private static BettingOption askForBettingOption() {
+        System.out.println("Choose your betting option:");
+        System.out.println("1. Low bet - $100");
+        System.out.println("2. Medium bet - $250");
+        System.out.println("3. High bet - $500");
+        System.out.println("4. VIP bet - $1000");
+
+        while (true) {
+            System.out.print("Enter choice: ");
+            String choice = scanner.nextLine();
+
+            if (choice.equals("1")) {
+                return BettingOption.LOW;
+            } else if (choice.equals("2")) {
+                return BettingOption.MEDIUM;
+            } else if (choice.equals("3")) {
+                return BettingOption.HIGH;
+            } else if (choice.equals("4")) {
+                return BettingOption.VIP;
+            } else {
+                System.out.println("Please choose 1, 2, 3, or 4.");
+            }
+        }
+    }
+
+
     private static void playTurns(BlackjackGame game) {
         for (Player player : game.getPlayers()) {
             System.out.println();
@@ -88,6 +126,31 @@ public class MainApp {
         }
     }
 
+    private static PlayerRank getPlayerRank(Player player, List<Player> players) {
+        if (player.isBust()) {
+            return null;
+        }
+
+        int playersWithBetterScore = 0;
+
+        for (Player otherPlayer : players) {
+            if (!otherPlayer.isBust() && otherPlayer.getScore() > player.getScore()) {
+                playersWithBetterScore++;
+            }
+        }
+
+        if (playersWithBetterScore == 0) {
+            return PlayerRank.GOLD;
+        } else if (playersWithBetterScore == 1) {
+            return PlayerRank.SILVER;
+        } else if (playersWithBetterScore == 2) {
+            return PlayerRank.BRONZE;
+        } else {
+            return null;
+        }
+    }
+
+
     private static void printResults(BlackjackGame game) {
         System.out.println();
         System.out.println("================================");
@@ -108,7 +171,19 @@ public class MainApp {
             System.out.println("There is a tie with " + winner.getScore() + " points.");
         } else {
             System.out.println("Winner: " + winner.getName() + " with " + winner.getScore() + " points.");
-            System.out.println(PlayerRank.GOLD.getDisplayName() + " title is given to " + winner.getName());
         }
+
+        System.out.println();
+
+        for (Player player : game.getPlayers()) {
+            PlayerRank rank = getPlayerRank(player, game.getPlayers());
+
+            if (rank == null) {
+                System.out.println(player.getName() + " has no Rank.");
+            } else {
+                System.out.println(player.getName() + " receives " + rank.getDisplayName());
+            }
+        }
+
     }
 }

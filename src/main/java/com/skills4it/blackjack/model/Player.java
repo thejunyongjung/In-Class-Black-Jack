@@ -1,4 +1,4 @@
-package com.skills4it.blackjack;
+package com.skills4it.blackjack.model;
 
 /**
  * A Player has a Hand.

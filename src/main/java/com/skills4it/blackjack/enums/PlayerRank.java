@@ -1,4 +1,4 @@
-package com.skills4it.blackjack;
+package com.skills4it.blackjack.enums;
 
 public enum PlayerRank {
     GOLD("Gold"),
