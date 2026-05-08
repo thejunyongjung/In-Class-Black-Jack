@@ -1,4 +1,4 @@
-package com.skills4it.blackjack.model;
+package com.skills4it.blackjack.models;
 
 import com.skills4it.blackjack.enums.Rank;
 import com.skills4it.blackjack.enums.Suit;
@@ -91,6 +91,7 @@ public class  Card {
             return "[##]";
         }
 
-        return "[" + rank.getDisplayName() + " of " + suit.getDisplayName() + "]";
+        // return "[" + rank.getDisplayName() + " of " + suit.getDisplayName() + "]";
+        return "[" + suit.getDisplayName() + rank.getDisplayName() + "]";
     }
 }

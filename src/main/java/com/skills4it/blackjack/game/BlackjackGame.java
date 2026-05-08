@@ -1,7 +1,7 @@
 package com.skills4it.blackjack.game;
 
-import com.skills4it.blackjack.model.Deck;
-import com.skills4it.blackjack.model.Player;
+import com.skills4it.blackjack.models.Deck;
+import com.skills4it.blackjack.models.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
