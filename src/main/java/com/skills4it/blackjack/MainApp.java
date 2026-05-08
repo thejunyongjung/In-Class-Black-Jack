@@ -108,6 +108,7 @@ public class MainApp {
             System.out.println("There is a tie with " + winner.getScore() + " points.");
         } else {
             System.out.println("Winner: " + winner.getName() + " with " + winner.getScore() + " points.");
+            System.out.println(PlayerRank.GOLD.getDisplayName() + " title is given to " + winner.getName());
         }
     }
 }

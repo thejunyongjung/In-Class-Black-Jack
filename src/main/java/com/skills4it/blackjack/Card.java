@@ -11,7 +11,7 @@ package com.skills4it.blackjack;
  * This class does NOT know about Deck, Hand, Player, or Game.
  * That keeps the class loosely coupled.
  */
-public class Card {
+public class  Card {
     private final Suit suit;
     private final Rank rank;
     private boolean faceUp;
