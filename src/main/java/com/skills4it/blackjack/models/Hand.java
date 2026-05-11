@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.skills4it.blackjack.ui.BlackjackConsoleUI.*;
+
 /**
  * A Hand has many Cards.
  *
@@ -81,10 +83,10 @@ public class Hand {
             builder.append(card).append(" ");
         }
 
-        builder.append("Value: ").append(getValue());
+        builder.append("Value: ").append(BR_CYAN + BOLD + getValue() + RESET);
 
         if (isBust()) {
-            builder.append(" BUST");
+            builder.append(RED + BOLD + " BUST" + RESET);
         }
 
         return builder.toString();

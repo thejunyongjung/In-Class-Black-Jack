@@ -1,27 +1,29 @@
 package com.skills4it.blackjack.enums;
 
+import static com.skills4it.blackjack.ui.BlackjackConsoleUI.*;
+
 /**
  * Represents the rank/value printed on a card.
  * Each rank also has a Blackjack point value.
  */
 public enum Rank {
-	TWO("2", 2),
-	THREE("3", 3),
-	FOUR("4", 4),
-	FIVE("5", 5),
-	SIX("6", 6),
-	SEVEN("7", 7),
-	EIGHT("8", 8),
-	NINE("9", 9),
-	TEN("10", 10),
+	TWO(BR_WHITE + "2" + RESET, 2),
+	THREE(BR_WHITE + "3" + RESET, 3),
+	FOUR(BR_WHITE + "4" + RESET, 4),
+	FIVE(BR_WHITE + "5" + RESET, 5),
+	SIX(BR_WHITE + "6" + RESET, 6),
+	SEVEN(BR_WHITE + "7" + RESET, 7),
+	EIGHT(BR_WHITE + "8" + RESET, 8),
+	NINE(BR_WHITE + "9" + RESET, 9),
+	TEN(BR_WHITE + "10" + RESET, 10),
 
 	// Face cards are worth 10 points in Blackjack.
-	JACK("J", 10),
-	QUEEN("Q", 10),
-	KING("K", 10),
+	JACK(BR_WHITE + "J" + RESET, 10),
+	QUEEN(BR_WHITE + "Q" + RESET, 10),
+	KING(BR_WHITE + "K" + RESET, 10),
 
 	// Ace is worth 11 by default.
-	ACE("A", 11);
+	ACE(BR_WHITE + "A" + RESET, 11);
 
 	// Text shown when displaying the card, for example "A" or "K".
 	private final String displayName;

@@ -3,6 +3,8 @@ package com.skills4it.blackjack.models;
 import com.skills4it.blackjack.enums.Rank;
 import com.skills4it.blackjack.enums.Suit;
 
+import static com.skills4it.blackjack.ui.BlackjackConsoleUI.*;
+
 /**
  * A Card is the primary object in the card game.
  *
@@ -92,6 +94,6 @@ public class  Card {
         }
 
         // return "[" + rank.getDisplayName() + " of " + suit.getDisplayName() + "]";
-        return "[" + suit.getDisplayName() + rank.getDisplayName() + "]";
+        return BR_WHITE + "[" + RESET + suit.getDisplayName() + rank.getDisplayName() + BR_WHITE + "]" + RESET;
     }
 }

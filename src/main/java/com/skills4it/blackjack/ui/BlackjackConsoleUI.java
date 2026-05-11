@@ -14,10 +14,27 @@ public class BlackjackConsoleUI {
     private static final int MIN_PLAYERS =2;
     private static final int MAX_PLAYERS =6;
 
+    // ANSI COLOR CODES FOR CLI APP DESIGN
+    public static final String RESET = "\u001B[0m";
+    public static final String BOLD = "\u001B[1m";
+    public static final String BLACK = "\u001B[90m";
+    public static final String RED = "\u001B[31m";
+    public static final String CYAN = "\u001B[36m";
+    public static final String BR_CYAN = "\u001B[96m";
+    public static final String BR_MAGENTA = "\u001B[95m";
+    public static final String BR_WHITE = "\u001B[97m";
+    public static final String _GOLD = "\u001B[33m";
+    public static final String _SILVER = "\u001B[37m";
+    public static final String _BRONZE = "\u001B[38;5;166m";
+
+
     private static Scanner scanner = new Scanner(System.in);
 
     public void start(){
         printWelcome();
+
+        BettingOption bet = askForBettingOption();
+        printBettingResult(bet);
 
         int numberOfPlayers = askForNumberOfPlayers();
         System.out.println("Number of players: " + numberOfPlayers);
@@ -27,20 +44,16 @@ public class BlackjackConsoleUI {
         game.dealStartingCards();
 
         // ASCII ART for the Game Start
-        System.out.println(
-                "                                                                                                       \n" +
-                "                                                                                                       \n" +
-                "   █████████                                         █████████    ███                          ███     \n" +
-                "  ███░░░░░███                                       ███░░░░░███ ░░███                         ░░███    \n" +
-                " ███     ░░░   ██████   █████████████    ██████    ░███    ░░░  ███████    ██████   ████████  ███████  \n" +
-                "░███          ░░░░░███ ░░███░░███░░███  ███░░███   ░░█████████ ░░░███░    ░░░░░███ ░░███░░███░░░███░   \n" +
-                "░███    █████  ███████  ░███ ░███ ░███ ░███████     ░░░░░░░░███  ░███      ███████  ░███ ░░░   ░███    \n" +
-                "░░███  ░░███  ███░░███  ░███ ░███ ░███ ░███░░░      ███    ░███  ░███ ███ ███░░███  ░███       ░███ ███\n" +
-                " ░░█████████ ░░████████ █████░███ █████░░██████    ░░█████████   ░░█████ ░░████████ █████      ░░█████ \n" +
-                "  ░░░░░░░░░   ░░░░░░░░ ░░░░░ ░░░ ░░░░░  ░░░░░░      ░░░░░░░░░     ░░░░░   ░░░░░░░░ ░░░░░        ░░░░░  \n" +
-                "                                                                                                       \n" +
-                "                                                                                                       \n" +
-                "                                                                                                       ");
+        System.out.println(BR_WHITE +
+                "                                                                        \n" +
+                "                                                                        \n" +
+                "██████╗ ██╗      █████╗  ██████╗██╗  ██╗     ██╗ █████╗  ██████╗██╗  ██╗\n" +
+                "██╔══██╗██║     ██╔══██╗██╔════╝██║ ██╔╝     ██║██╔══██╗██╔════╝██║ ██╔╝\n" +
+                "██████╔╝██║     ███████║██║     █████╔╝      ██║███████║██║     █████╔╝ \n" +
+                "██╔══██╗██║     ██╔══██║██║     ██╔═██╗ ██   ██║██╔══██║██║     ██╔═██╗ \n" +
+                "██████╔╝███████╗██║  ██║╚██████╗██║  ██╗╚█████╔╝██║  ██║╚██████╗██║  ██╗\n" +
+                "╚═════╝ ╚══════╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝ ╚════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝\n" +
+                "                                                                          " + RESET);
 
         playTurns(game);
         printResults(game);
@@ -49,10 +62,9 @@ public class BlackjackConsoleUI {
 
 
     public void printWelcome() {
-        System.out.println("================================");
+        System.out.println(CYAN + "================================");
         System.out.println("      Welcome to Blackjack");
-        System.out.println("================================");
-        System.out.println();
+        System.out.println("================================" + RESET);
     }
 
     public int askForNumberOfPlayers() {
@@ -62,7 +74,7 @@ public class BlackjackConsoleUI {
 
             String input = scanner.nextLine().trim();
               if (input.isEmpty()) {
-                System.out.println("Input cannot be empty. Please enter a number.");
+                System.out.println(_GOLD + "Input cannot be empty. Please enter a number."+ RESET);
                 continue;
               }
             try { int numberOfPlayers = Integer.parseInt(input);
@@ -70,13 +82,13 @@ public class BlackjackConsoleUI {
                 if(numberOfPlayers >= MIN_PLAYERS && numberOfPlayers <= MAX_PLAYERS){
                     return numberOfPlayers;
                 }
-                System.out.println("Please enter a number between "+ MIN_PLAYERS + " and "+ MAX_PLAYERS + ".");
+                System.out.println(_GOLD + "Please enter a number between "+ MIN_PLAYERS + " and "+ MAX_PLAYERS + "." + RESET);
             } catch (NumberFormatException exception){
-                    System.out.println("'" + input + "' is not a valid whole number." );}
+                    System.out.println(_GOLD + "'" + input + "' is not a valid whole number." + RESET);}
                 }
             }
 
-    public static List<String> askForPlayerNames(int numberOfPlayers) {
+    /*private List<String> askForPlayerNames(int numberOfPlayers) {
         List<String> names = new ArrayList<>();
 
         for (int i = 1; i <= numberOfPlayers; i++) {
@@ -86,12 +98,47 @@ public class BlackjackConsoleUI {
         }
 
         return names;
+    }*/
+
+    private List<String> askForPlayerNames(int numberOfPlayers) {
+        List<String> names = new ArrayList<>();
+        for (int i = 1; i <= numberOfPlayers; i++) {
+            String name = askForSinglePlayerName(i, names);
+            names.add(name);
+        }
+        return names;
+    }
+
+    private String askForSinglePlayerName(int playerNumber, List<String> existingNames) {
+        while (true) {
+            System.out.print("Enter name for" + BOLD + " player " + playerNumber + RESET + ": ");
+            String name = scanner.nextLine().trim();
+            if (name.isEmpty()) {
+                System.out.println(_GOLD + "Name cannot be empty." + RESET);
+                continue;
+            }
+            if (nameAlreadyExists(name, existingNames)) {
+                System.out.println(_GOLD + "This name is already used. Please choose another name." + RESET);
+                continue;
+            }
+            return name;
+        }
+    }
+
+
+    private boolean nameAlreadyExists(String name, List<String> existingNames) {
+        for (String existingName : existingNames) {
+            if (existingName.equalsIgnoreCase(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void playTurns(BlackjackGame game) {
         for (Player player : game.getPlayers()) {
             System.out.println();
-            System.out.println(player.getName() + "'s turn");
+            System.out.println(BOLD + player.getName() + RESET + "'s turn");
             System.out.println(player);
 
             while (!player.isBust()) {
@@ -137,9 +184,9 @@ public class BlackjackConsoleUI {
 
     private void printResults(BlackjackGame game) {
         System.out.println();
-        System.out.println("================================");
+        System.out.println(CYAN + "================================");
         System.out.println("            Results");
-        System.out.println("================================");
+        System.out.println("================================" + RESET);
 
         for (Player player : game.getPlayers()) {
             System.out.println(player);
@@ -150,11 +197,11 @@ public class BlackjackConsoleUI {
         System.out.println();
 
         if (winner == null) {
-            System.out.println("Everyone busted. There is no winner.");
+            System.out.println(RED + "Everyone busted. " + RESET + "There is no winner.");
         } else if (game.hasTieForWinningScore()) {
             System.out.println("There is a tie with " + winner.getScore() + " points.");
         } else {
-            System.out.println("Winner: " + winner.getName() + " with " + winner.getScore() + " points.");
+            System.out.println("Winner: " + BOLD + winner.getName() + RESET + " with " + BR_CYAN + winner.getScore() + RESET + " points.");
         }
 
         System.out.println();
@@ -163,9 +210,9 @@ public class BlackjackConsoleUI {
             PlayerRank rank = getPlayerRank(player, game.getPlayers());
 
             if (rank == null) {
-                System.out.println(player.getName() + " has no Rank.");
+                System.out.println(BOLD + player.getName() + RESET + " has no Rank.");
             } else {
-                System.out.println(player.getName() + " receives " + rank.getDisplayName());
+                System.out.println(rank.getDisplayName() + ": " + BOLD + player.getName() + RESET);
             }
         }
 
@@ -174,7 +221,7 @@ public class BlackjackConsoleUI {
     private PlayerAction askForPlayerAction() {
 
         while (true) {
-            System.out.print("Hit or Stay (h/s): ");
+            System.out.print("Hit or Stay " + BOLD + "(h/s): " + RESET);
             String input = scanner.nextLine().trim().toLowerCase();
             switch (input) {
                 case "h":
@@ -184,14 +231,14 @@ public class BlackjackConsoleUI {
                 case "stay":
                     return PlayerAction.STAY;
                 default:
-                    System.out.println("Please type 'h' for Hit or 's' for Stay.");
+                    System.out.println(_GOLD + "Please type 'h' for Hit or 's' for Stay." + RESET);
             }
         }
     }
 
 
 
-    public static BettingOption askForBettingOption() {
+    private BettingOption askForBettingOption() {
         System.out.println("Choose your betting option:");
         System.out.println("1. Low bet - $100");
         System.out.println("2. Medium bet - $250");
@@ -211,9 +258,16 @@ public class BlackjackConsoleUI {
             } else if (choice.equals("4")) {
                 return BettingOption.ALL_IN;
             } else {
-                System.out.println("Please choose 1, 2, 3, or 4.");
+                System.out.println(_GOLD + "Please choose 1, 2, 3, or 4." + RESET);
             }
         }
+    }
+
+    private void printBettingResult(BettingOption bet) {
+        System.out.println();
+        System.out.println("Selected bet: " + BOLD + bet.getDisplayName() + RESET);
+        System.out.println("Bet amount: " + BOLD + "$" + bet.getAmount() + RESET);
+        System.out.println();
     }
 
 }
